@@ -91,27 +91,30 @@ class CustomButton: UIButton {
         configuration?.imagePlacement = .trailing
         configuration?.imagePadding = 8
         configuration?.contentInsets = NSDirectionalEdgeInsets(top: 10, leading: 14, bottom: 10, trailing: 14)
-        addTarget(self, action: #selector(scaleButton), for: .touchUpInside)
+        addTarget(self, action: #selector(scaleDownButton), for: .touchDown)
+        addTarget(self, action: #selector(scaleUpButton), for: .touchUpInside)
+
     }
     
     // MARK: Animate button
-    @objc func scaleButton(_ sender: UIButton) {
+    @objc func scaleDownButton(_ sender: UIButton) {
         UIView.animate(withDuration: 0.1,
                        delay: 0.0,
                        options: .allowUserInteraction,
                        animations: {
             sender.transform = CGAffineTransform(scaleX: 0.9, y: 0.9)
         })
-        
-        DispatchQueue.main.asyncAfter(deadline: .now() + 0.1) {
-            UIView.animate(withDuration: 0.1,
-                           delay: 0.0,
-                           options: .allowUserInteraction,
-                           animations: {
-                sender.transform = CGAffineTransform(scaleX: 1, y: 1)
-            })
-        }
     }
+
+    @objc func scaleUpButton(_ sender: UIButton) {
+        UIView.animate(withDuration: 0.1,
+                       delay: 0.0,
+                       options: .allowUserInteraction,
+                       animations: {
+            sender.transform = CGAffineTransform(scaleX: 1, y: 1)
+        })
+    }
+
     
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
